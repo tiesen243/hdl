@@ -1,16 +1,16 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off bai7 -c bai7 --vector_source="C:/Users/ttien/OneDrive/Documents/quartus/bai7/Waveform.vwf" --testbench_file="C:/Users/ttien/OneDrive/Documents/quartus/bai7/simulation/qsim/Waveform.vwf.vt"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off bai7 -c bai7 --vector_source="C:/Users/ttien/OneDrive/Documents/quartus/bai7/Waveform.vwf" --testbench_file="C:/Users/ttien/OneDrive/Documents/quartus/bai7/simulation/qsim/Waveform.vwf.vt"</ttestbench_cmd>
-<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Users/ttien/OneDrive/Documents/quartus/bai7/simulation/qsim/" bai7 -c bai7</fnetlist_cmd>
-<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="C:/Users/ttien/OneDrive/Documents/quartus/bai7/simulation/qsim/" bai7 -c bai7</tnetlist_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off fsm -c fsm --vector_source="C:/Users/ttien/OneDrive/Documents/quartus/fsm/Waveform1.vwf" --testbench_file="C:/Users/ttien/OneDrive/Documents/quartus/fsm/simulation/qsim/Waveform1.vwf.vt"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off fsm -c fsm --vector_source="C:/Users/ttien/OneDrive/Documents/quartus/fsm/Waveform1.vwf" --testbench_file="C:/Users/ttien/OneDrive/Documents/quartus/fsm/simulation/qsim/Waveform1.vwf.vt"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Users/ttien/OneDrive/Documents/quartus/fsm/simulation/qsim/" fsm -c fsm</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="C:/Users/ttien/OneDrive/Documents/quartus/fsm/simulation/qsim/" fsm -c fsm</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
-vlog -work work bai7.vo
-vlog -work work Waveform.vwf.vt
-vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.bai7_vlg_vec_tst
-vcd file -direction bai7.msim.vcd
-vcd add -internal bai7_vlg_vec_tst/*
-vcd add -internal bai7_vlg_vec_tst/i1/*
+vlog -work work fsm.vo
+vlog -work work Waveform1.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.fsm_vlg_vec_tst
+vcd file -direction fsm.msim.vcd
+vcd add -internal fsm_vlg_vec_tst/*
+vcd add -internal fsm_vlg_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -20,18 +20,15 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
-
-
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
-vlog -work work bai7.vo
-vlog -work work Waveform.vwf.vt
-vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.bai7_vlg_vec_tst
-vcd file -direction bai7.msim.vcd
-vcd add -internal bai7_vlg_vec_tst/*
-vcd add -internal bai7_vlg_vec_tst/i1/*
+vlog -work work fsm.vo
+vlog -work work Waveform1.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.fsm_vlg_vec_tst
+vcd file -direction fsm.msim.vcd
+vcd add -internal fsm_vlg_vec_tst/*
+vcd add -internal fsm_vlg_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -41,9 +38,6 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
-
-
 </modelsim_script_timing>
 <hdl_lang>verilog</hdl_lang>
 </simulation_settings>*/
@@ -92,7 +86,7 @@ SIGNAL("ck")
 	PARENT = "";
 }
 
-SIGNAL("i")
+SIGNAL("rs")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -102,7 +96,7 @@ SIGNAL("i")
 	PARENT = "";
 }
 
-SIGNAL("rs")
+SIGNAL("i")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -146,457 +140,6 @@ TRANSITION_LIST("ck")
 	}
 }
 
-TRANSITION_LIST("i")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 0.906;
-		LEVEL 1 FOR 6.4;
-		LEVEL 0 FOR 12.694;
-		LEVEL 1 FOR 0.918;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 1.9;
-			LEVEL 1 FOR 1.433;
-		}
-		LEVEL 0 FOR 1.9;
-		LEVEL 1 FOR 1.553;
-		LEVEL 0 FOR 13.8;
-		LEVEL 1 FOR 7.238;
-		LEVEL 0 FOR 2.0;
-		LEVEL 1 FOR 3.0;
-		LEVEL 0 FOR 2.0;
-		LEVEL 1 FOR 0.925;
-		LEVEL 0 FOR 8.116;
-		LEVEL 1 FOR 6.4;
-		LEVEL 0 FOR 5.484;
-		LEVEL 1 FOR 1.437;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 2.1;
-			LEVEL 1 FOR 2.9;
-		}
-		LEVEL 0 FOR 2.1;
-		LEVEL 1 FOR 2.86;
-		LEVEL 0 FOR 1.8;
-		LEVEL 1 FOR 1.533;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 1.8;
-			LEVEL 1 FOR 1.533;
-		}
-		LEVEL 0 FOR 1.8;
-		LEVEL 1 FOR 1.696;
-		LEVEL 0 FOR 1.667;
-		LEVEL 1 FOR 1.666;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 1.667;
-			LEVEL 1 FOR 1.666;
-		}
-		LEVEL 0 FOR 1.667;
-		LEVEL 1 FOR 2.123;
-		LEVEL 0 FOR 3.733;
-		LEVEL 1 FOR 2.933;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.733;
-			LEVEL 1 FOR 2.933;
-		}
-		LEVEL 0 FOR 3.733;
-		LEVEL 1 FOR 0.92;
-		LEVEL 0 FOR 3.466;
-		LEVEL 1 FOR 3.2;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 6.8;
-			LEVEL 1 FOR 3.2;
-		}
-		LEVEL 0 FOR 4.123;
-		LEVEL 1 FOR 1.9;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.1;
-			LEVEL 1 FOR 1.9;
-		}
-		LEVEL 0 FOR 2.641;
-		LEVEL 1 FOR 10.4;
-		LEVEL 0 FOR 12.724;
-		LEVEL 1 FOR 2.799;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 3.867;
-			LEVEL 1 FOR 2.799;
-		}
-		LEVEL 0 FOR 0.415;
-		LEVEL 1 FOR 0.038;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 2.8;
-			LEVEL 1 FOR 2.2;
-		}
-		LEVEL 0 FOR 2.8;
-		LEVEL 1 FOR 4.52;
-		LEVEL 0 FOR 5.2;
-		LEVEL 1 FOR 4.8;
-		LEVEL 0 FOR 5.2;
-		LEVEL 1 FOR 2.442;
-		LEVEL 0 FOR 0.94;
-		LEVEL 1 FOR 1.233;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.1;
-			LEVEL 1 FOR 1.233;
-		}
-		LEVEL 0 FOR 1.161;
-		LEVEL 1 FOR 0.673;
-		LEVEL 0 FOR 4.2;
-		LEVEL 1 FOR 5.127;
-		LEVEL 0 FOR 2.765;
-		LEVEL 1 FOR 1.85;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.15;
-			LEVEL 1 FOR 1.85;
-		}
-		LEVEL 0 FOR 0.385;
-		LEVEL 1 FOR 3.727;
-		LEVEL 0 FOR 6.1;
-		LEVEL 1 FOR 0.173;
-		LEVEL 0 FOR 0.618;
-		LEVEL 1 FOR 2.399;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 4.267;
-			LEVEL 1 FOR 2.399;
-		}
-		LEVEL 0 FOR 3.651;
-		LEVEL 1 FOR 1.733;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.667;
-			LEVEL 1 FOR 3.999;
-		}
-		LEVEL 0 FOR 2.667;
-		LEVEL 1 FOR 4.701;
-		LEVEL 0 FOR 4.7;
-		LEVEL 1 FOR 5.3;
-		LEVEL 0 FOR 4.7;
-		LEVEL 1 FOR 4.819;
-		LEVEL 0 FOR 10.0;
-		LEVEL 1 FOR 9.076;
-		LEVEL 0 FOR 2.9;
-		LEVEL 1 FOR 2.1;
-		LEVEL 0 FOR 2.9;
-		LEVEL 1 FOR 1.072;
-		LEVEL 0 FOR 3.536;
-		LEVEL 1 FOR 1.999;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 4.667;
-			LEVEL 1 FOR 1.999;
-		}
-		LEVEL 0 FOR 1.133;
-		LEVEL 1 FOR 3.914;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 5.8;
-			LEVEL 1 FOR 4.2;
-		}
-		LEVEL 0 FOR 5.8;
-		LEVEL 1 FOR 3.213;
-		LEVEL 0 FOR 5.2;
-		LEVEL 1 FOR 4.8;
-		LEVEL 0 FOR 5.2;
-		LEVEL 1 FOR 2.496;
-		LEVEL 0 FOR 1.934;
-		LEVEL 1 FOR 1.399;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 1.934;
-			LEVEL 1 FOR 1.399;
-		}
-		LEVEL 0 FOR 1.934;
-		LEVEL 1 FOR 0.777;
-		LEVEL 0 FOR 4.901;
-		LEVEL 1 FOR 3.4;
-		LEVEL 0 FOR 1.982;
-		LEVEL 1 FOR 1.899;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 1.434;
-			LEVEL 1 FOR 1.899;
-		}
-		LEVEL 0 FOR 2.717;
-		LEVEL 1 FOR 1.066;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.267;
-			LEVEL 1 FOR 1.066;
-		}
-		LEVEL 0 FOR 1.797;
-		LEVEL 1 FOR 1.166;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.167;
-			LEVEL 1 FOR 1.166;
-		}
-		LEVEL 0 FOR 7.284;
-		LEVEL 1 FOR 6.2;
-		LEVEL 0 FOR 11.229;
-		LEVEL 1 FOR 3.3;
-		LEVEL 0 FOR 3.061;
-		LEVEL 1 FOR 3.706;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 5.1;
-			LEVEL 1 FOR 4.9;
-		}
-		LEVEL 0 FOR 5.1;
-		LEVEL 1 FOR 1.194;
-		LEVEL 0 FOR 1.635;
-		LEVEL 1 FOR 1.299;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.034;
-			LEVEL 1 FOR 1.299;
-		}
-		LEVEL 0 FOR 0.4;
-		LEVEL 1 FOR 4.089;
-		LEVEL 0 FOR 4.1;
-		LEVEL 1 FOR 1.811;
-		LEVEL 0 FOR 0.539;
-		LEVEL 1 FOR 1.633;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 1.7;
-			LEVEL 1 FOR 1.633;
-		}
-		LEVEL 0 FOR 1.162;
-		LEVEL 1 FOR 0.411;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 2.2;
-			LEVEL 1 FOR 1.133;
-		}
-		LEVEL 0 FOR 2.2;
-		LEVEL 1 FOR 1.226;
-		LEVEL 0 FOR 2.034;
-		LEVEL 1 FOR 1.299;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 2.034;
-			LEVEL 1 FOR 1.299;
-		}
-		LEVEL 0 FOR 2.034;
-		LEVEL 1 FOR 1.396;
-		LEVEL 0 FOR 2.8;
-		LEVEL 1 FOR 2.2;
-		LEVEL 0 FOR 2.8;
-		LEVEL 1 FOR 1.601;
-		LEVEL 0 FOR 0.017;
-		LEVEL 1 FOR 6.0;
-		LEVEL 0 FOR 3.983;
-		LEVEL 1 FOR 2.424;
-		LEVEL 0 FOR 5.9;
-		LEVEL 1 FOR 1.676;
-		LEVEL 0 FOR 6.396;
-		LEVEL 1 FOR 3.4;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 6.6;
-			LEVEL 1 FOR 3.4;
-		}
-		LEVEL 0 FOR 1.317;
-		LEVEL 1 FOR 4.6;
-		LEVEL 0 FOR 5.204;
-		LEVEL 1 FOR 3.199;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 3.467;
-			LEVEL 1 FOR 3.199;
-		}
-		LEVEL 0 FOR 5.042;
-		LEVEL 1 FOR 5.1;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 4.9;
-			LEVEL 1 FOR 5.1;
-		}
-		LEVEL 0 FOR 3.273;
-		LEVEL 1 FOR 2.2;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 2.8;
-			LEVEL 1 FOR 2.2;
-		}
-		LEVEL 0 FOR 1.937;
-		LEVEL 1 FOR 2.401;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 3.134;
-			LEVEL 1 FOR 3.532;
-		}
-		LEVEL 0 FOR 3.134;
-		LEVEL 1 FOR 1.169;
-		LEVEL 0 FOR 2.55;
-		LEVEL 1 FOR 2.45;
-		LEVEL 0 FOR 2.55;
-		LEVEL 1 FOR 2.414;
-		LEVEL 0 FOR 2.058;
-		LEVEL 1 FOR 1.95;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.05;
-			LEVEL 1 FOR 1.95;
-		}
-		LEVEL 0 FOR 0.992;
-		LEVEL 1 FOR 1.002;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 1.9;
-			LEVEL 1 FOR 1.433;
-		}
-		LEVEL 0 FOR 1.9;
-		LEVEL 1 FOR 0.432;
-		LEVEL 0 FOR 0.694;
-		LEVEL 1 FOR 8.2;
-		LEVEL 0 FOR 11.106;
-		LEVEL 1 FOR 1.872;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 4.533;
-			LEVEL 1 FOR 2.133;
-		}
-		LEVEL 0 FOR 4.533;
-		LEVEL 1 FOR 2.497;
-		LEVEL 0 FOR 6.3;
-		LEVEL 1 FOR 3.7;
-		LEVEL 0 FOR 6.3;
-		LEVEL 1 FOR 1.466;
-		LEVEL 0 FOR 3.271;
-		LEVEL 1 FOR 5.0;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 5.0;
-			LEVEL 1 FOR 5.0;
-		}
-		LEVEL 0 FOR 2.416;
-		LEVEL 1 FOR 5.7;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 4.3;
-			LEVEL 1 FOR 5.7;
-		}
-		LEVEL 0 FOR 3.613;
-		LEVEL 1 FOR 1.113;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 1.4;
-			LEVEL 1 FOR 1.933;
-		}
-		LEVEL 0 FOR 1.4;
-		LEVEL 1 FOR 0.821;
-		LEVEL 0 FOR 3.084;
-		LEVEL 1 FOR 1.55;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.45;
-			LEVEL 1 FOR 1.55;
-		}
-		LEVEL 0 FOR 0.366;
-		LEVEL 1 FOR 4.542;
-		LEVEL 0 FOR 13.0;
-		LEVEL 1 FOR 2.458;
-		LEVEL 0 FOR 3.197;
-		LEVEL 1 FOR 2.999;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 3.667;
-			LEVEL 1 FOR 2.999;
-		}
-		LEVEL 0 FOR 4.505;
-		LEVEL 1 FOR 4.6;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 5.4;
-			LEVEL 1 FOR 4.6;
-		}
-		LEVEL 0 FOR 3.225;
-		LEVEL 1 FOR 2.933;
-		NODE
-		{
-			REPEAT = 2;
-			LEVEL 0 FOR 3.733;
-			LEVEL 1 FOR 2.933;
-		}
-		LEVEL 0 FOR 1.877;
-		LEVEL 1 FOR 0.507;
-		LEVEL 0 FOR 12.0;
-		LEVEL 1 FOR 10.503;
-		LEVEL 0 FOR 6.4;
-		LEVEL 1 FOR 3.6;
-		LEVEL 0 FOR 6.4;
-		LEVEL 1 FOR 0.59;
-		LEVEL 0 FOR 1.244;
-		LEVEL 1 FOR 3.4;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 6.6;
-			LEVEL 1 FOR 3.4;
-		}
-		LEVEL 0 FOR 7.404;
-		LEVEL 1 FOR 2.0;
-		NODE
-		{
-			REPEAT = 1;
-			LEVEL 0 FOR 3.0;
-			LEVEL 1 FOR 2.0;
-		}
-		LEVEL 0 FOR 0.952;
-	}
-}
-
 TRANSITION_LIST("rs")
 {
 	NODE
@@ -604,6 +147,75 @@ TRANSITION_LIST("rs")
 		REPEAT = 1;
 		LEVEL 1 FOR 500.0;
 		LEVEL 0 FOR 500.0;
+	}
+}
+
+TRANSITION_LIST("i")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 30.0;
+		LEVEL 0 FOR 30.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 30.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 30.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 20.0;
+		LEVEL 1 FOR 50.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 20.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 20.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 30.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 30.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 20.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 10.0;
 	}
 }
 
@@ -636,7 +248,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "i";
+	CHANNEL = "rs";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -645,7 +257,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "rs";
+	CHANNEL = "i";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 2;
