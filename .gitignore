@@ -55,6 +55,7 @@
 *example*
 *sopc_*
 */*_model_dump.txt
+
 # *.sdc # I want those timing files
 
 # ignore Quartus II generated folders
