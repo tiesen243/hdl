@@ -2,12 +2,6 @@
 
 This repository contains the Verilog Hardware Description Language (HDL) source code and supporting files for designing an integrated circuit (IC) that implements [brief description of IC functionality].
 
-## Features
-
-- Mux 2 to 1
-- Mux 4 to 1
-- FSM that return y1 = 1 if state == 101 and y2 = 1 if state == 0100
-
 ## Getting Started
 
 ### Prerequisites:
