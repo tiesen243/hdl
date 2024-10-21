@@ -1,5 +1,6 @@
-## PROGRAM "FSM 3 - Bai 10"
-## Hiển thị lần lượt các chữ A đến F. Khi RS tích cực thì LED tắt
+## PROGRAM "FSM 5 - Bai 12"
+## Led bảy đoạn hiển thị chữ HELLO.
+## Khi RS tích cực thì led tắt hết.
 ## VERSION "Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition"		
 ## DATE    "Wed May 10 14:03:25 2017"  		
 ##
