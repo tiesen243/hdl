@@ -1,4 +1,4 @@
-# Verilog HDL Project: [Project Name]
+# Verilog HDL Project
 
 This repository contains the Verilog Hardware Description Language (HDL) source code and supporting files for designing an integrated circuit (IC) that implements [brief description of IC functionality].
 
