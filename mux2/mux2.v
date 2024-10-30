@@ -2,7 +2,7 @@ module mux2(
 	input [1:0] sel,
 	input a, b, c, d,
 	output q
-	);
+);
 	wire t1, t2;
 	
 	mux2to1 m0(t1, sel[0], a, b);
@@ -13,7 +13,7 @@ endmodule
 module mux2to1(
 	input sel, a, b,
 	output q
-	);
+);
 	wire selbar, a1, a2;
 	
 	not(selbar, sel);
