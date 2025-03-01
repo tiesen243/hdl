@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP2C35F672) Path("C:/Users/Admin/Desktop/week-2/decoder4_16/output_files/") File("decoder4_16.sof") MfrSpec(OpMask(1));
+		Device PartName(EP2C35F672) Path("C:/Users/Admin/Desktop/hdl-t243/c4b/output_files/") File("c4b.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

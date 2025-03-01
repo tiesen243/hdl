@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP2C35F672) Path("C:/Users/Admin/Desktop/week-2/decoder4_16/output_files/") File("decoder4_16.sof") MfrSpec(OpMask(1));
+		Device PartName(EP2C35F672) Path("C:/Users/Admin/Desktop/hdl-t243/led_7_seg/output_files/") File("led_7_seg.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
