@@ -1,4 +1,4 @@
-module led_7_seg_2(
+ module led_7_seg_2(
 	input [3:0] SW,
 	output reg [7:0] HEX7, HEX6, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0
 );
