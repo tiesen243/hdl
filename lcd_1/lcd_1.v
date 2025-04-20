@@ -1,0 +1,102 @@
+module lcd_1(
+	input CLOCK_50, 
+	output LCD_ON, LCD_BLON, LCD_EN, LCD_RS, LCD_RW,
+	inout [7:0] LCD_DATA
+);
+	reg [8:0] data;
+	reg on, blon, en, rw, flag, mode, r_l;
+	reg [5:0] state;
+	reg [2:0] index;
+	reg [19:0] count_lcd, countend;
+	reg [3:0] times;
+	assign LCD_ON = on;
+	assign LCD_BLON = blon;
+	assign LCD_EN = en;
+	assign LCD_RS = data[8];
+	assign LCD_RW = rw;
+	assign LCD_DATA = (!rw) ? data[7:0] : 8'hzz;
+	
+	initial begin
+		on <= 1'b1;
+		blon <= 1'b0;
+		en <= 1'b0;
+		rw <= 1'b0;
+		data <= 9'b0;
+		
+		state <= 6'b0;
+		flag <= 1;
+		index <= 0;
+		countend <= 20'hFFFFF;
+	end
+
+	always @ (posedge CLOCK_50) begin
+		if (flag) begin
+			if (count_lcd < countend) count_lcd <= count_lcd + 20'b1;
+			else count_lcd <= 20'b0;
+		end
+	end
+	
+	always @ (posedge CLOCK_50 & state < 6'h29) begin
+		case (index)
+			3'h0: begin
+				if (count_lcd == countend) begin
+					flag <= 0;
+					if (state < 6'h29) state <= state + 1;
+					index <= index + 1;
+				end
+			end
+			3'h1: index <= index + 1;
+			3'h2: begin
+				en <= 1;
+				flag <= 1;
+				countend <= 8'h10;
+				index <= index + 1;
+			end
+			3'h3: begin
+				if (count_lcd == countend) begin
+					en <= 0;
+					flag <= 1;
+					countend <= 20'h40000;
+					index <= 0;
+				end
+			end
+			default: index <= 0;
+		endcase
+	end
+	
+	always @ (posedge CLOCK_50) begin
+		case (state) 
+			/* Init LCD */
+			6'h00: data <= 9'h030;
+			6'h01: data <= 9'h030;
+			6'h02: data <= 9'h030;
+			6'h03: data <= 9'h038;
+			6'h04: data <= 9'h00C;
+			6'h05: data <= 9'h001;
+			6'h06: data <= 9'h006;
+			6'h07: data <= 9'h080;
+			/* Data */
+			6'h08: data <= 9'h083; // Dich con tro den vi tri 03
+			6'h09: data <= 9'h154; // T
+			6'h0A: data <= 9'h152; // R
+			6'h0B: data <= 9'h141; // A
+			6'h0C: data <= 9'h14E; // N
+			6'h0D: data <= 9'h120;
+			6'h0E: data <= 9'h120;
+			6'h0F: data <= 9'h154; // T
+			6'h10: data <= 9'h149; // I
+			6'h11: data <= 9'h145; // E
+			6'h12: data <= 9'h14E; // N
+			6'h13: data <= 9'h0C4; // Dich con tro den vi tri 44
+			6'h14: data <= 9'h132; // 2
+			6'h15: data <= 9'h132; // 2
+			6'h16: data <= 9'h136; // 6
+			6'h17: data <= 9'h135; // 5
+			6'h18: data <= 9'h133; // 3
+			6'h19: data <= 9'h139; // 9
+			6'h1A: data <= 9'h139; // 9
+			6'h1B: data <= 9'h131; // 1
+			default: data <= 9'h120;
+		endcase
+	end
+endmodule
