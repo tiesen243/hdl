@@ -9,52 +9,40 @@ module fsm_5(
 	
 	div1s D1(CLOCK_50, ck1s);
 	
-	reg [4:0] count;	
-	reg [1:0] state;
-	parameter GREEN = 0, YELLOW = 1, RED = 3;
+	reg [4:0] current_state, next_state;
+
+  always @ (*) begin
+    if (current_state > 30) next_state= 0;
+    else next_state = current_state + 1;
+  end
 	
 	always @ (negedge ck1s) begin
-		if (SW[0]) begin
-			state <= GREEN;
-			count <= 16;
-		end else begin
-			if (count == 0) begin
-				case (state)
-					GREEN: begin
-						state <= YELLOW;
-						count <= 5;
-					end
-					YELLOW: begin 
-						state <= RED;
-						count <= 9;
-					end
-					RED: begin
-						state <= GREEN;
-						count <= 16;
-					end
-				endcase
-			end else count <= count - 1;
-		end
+    if (SW[0]) current_state <= 0;
+    else current_state <= next_state;
 	end
 	
 	always @ (*) begin
-		case (state)
-			GREEN: begin
-				LEDG[0] = 1;
-				LEDR = 18'b000000000000000000;
-			end
-			YELLOW: begin
-				LEDG[0] = 0;
-				LEDR = 18'b100000000000000000;
-			end
-			RED: begin
-				LEDG[0] = 0;
-				LEDR = 18'b000000000000000001;
-			end
-		endcase
+    if (current_state <= 16) begin
+      LEDG = 1'b1;
+      LEDR = 18'b000000000000000000;
+    end else if (current_state <= 21) begin
+      LEDG = 1'b0;
+      LEDR = 18'b000000000000000001;
+    end else if (current_state <= 30) begin
+      LEDG = 1'b0;
+      LEDR = 18'b000000000000100000;
+    end
 	end
+
+  reg [4:0] count;
+  always @ (*) begin
+    if (current_state <= 16) count = 16 - current_state;
+    else if (current_state <= 21) count = 21 - current_state + 5;
+    else count = 30 - current_state + 9;
+  end
+
 	
-	wire [3:0] tens = count / 10, ones = count % 10;
+  wire [3:0] tens = count / 10, ones = count % 10;
 	encode_bcd E0(tens, HEX1);
 	encode_bcd E1(ones, HEX0);
 endmodule

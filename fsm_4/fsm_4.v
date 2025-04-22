@@ -84,45 +84,24 @@ module wave(
 	input ck, rs,
 	output reg [17:0] LEDR
 );
-	reg		 [4:0] count;
-	reg 		 [2:0] curr_state, next_state;
-	parameter S0 = 0, S1 = 1, S2 = 2, S3 = 3, S4 = 4;
+	reg [2:0] curr_state, next_state;
 	
-	always @ (curr_state) begin
-		case (curr_state)
-			S0: next_state <= S1;
-			S1: next_state = (count == 17) ? S2 : S1;
-			S2: next_state = S3;
-			S3: next_state = (count == 0) ? S4 : S3;
-			S4: next_state = S1;
-			default: next_state = S0;
-		endcase
+	always @ (*) begin
+    if (curr_state < 36) next_state = 0;
+    else next_state = curr_state + 1;
 	end
 	
 	always @ (negedge ck) begin
-		if (rs) curr_state <= S0;
+		if (rs) curr_state <= 0;
 		else curr_state <= next_state;
 	end
 	
-	always @ (negedge ck) begin
+	always @ (*) begin
 		case (curr_state)
-			S0: begin
-				LEDR <= 18'b000000000000000000;
-				count <= 0;
-			end
-			S1: begin
-				LEDR <= (count == 0) ? 18'b100000000000000000 : (LEDR >> 1) | 18'b100000000000000000;
-				count <= count + 1;
-			end
-			S2: LEDR <= 18'b0;
-			S3: begin
-				LEDR <= (count == 17) ? 18'b000000000000000001 : (LEDR << 1'h1) | 1'b1;
-				count <= count - 1;
-			end
-			S4: begin
-				LEDR <= 18'b000000000000000000;
-				count <= 0;
-			end
+			0: LEDR <= 18'b000000000000000000;
+			1: LEDR <= 18'b000000000000000001;
+			2: LEDR <= 18'b000000000000000010;
+      // ...lam het 36 trang thai
 		endcase
 	end
 endmodule
