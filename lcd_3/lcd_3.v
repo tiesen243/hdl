@@ -38,8 +38,9 @@ module lcd_3(
 	end
 	
 	always @ (posedge CLOCK_50) begin
-		if (prev_state_2 != state_2 && state == 6'h28) state <= 0;
-		case (index)
+		if (state >= 6'h29) begin
+			if (prev_state_2 != state_2) state <= 0;
+		end else case (index)
 			3'h0: begin
 				if (count_lcd == countend) begin
 					flag <= 0;

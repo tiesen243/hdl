@@ -111,12 +111,12 @@ module wave(
 				count <= 0;
 			end
 			S1: begin
-				LEDR <= (count == 0) ? 18'b000000000000000001 : (LEDR << 1) | 1'b1;
+				LEDR <= (count == 0) ? 18'b100000000000000000 : (LEDR >> 1) | 18'b100000000000000000;
 				count <= count + 1;
 			end
 			S2: LEDR <= 18'b0;
 			S3: begin
-				LEDR <= (count == 17) ? 18'b100000000000000000 : (LEDR >> 1'h1) | 18'b100000000000000000;
+				LEDR <= (count == 17) ? 18'b000000000000000001 : (LEDR << 1'h1) | 1'b1;
 				count <= count - 1;
 			end
 			S4: begin

@@ -5,17 +5,11 @@ module func_1(
 );
 	wire [6:0] r;
 	wire [5:0] r1, r2;
-	wire c1, c2, c3, c4, c5;
 	
 	multifier m1(SW[11:9], SW[8:6], r1);
 	multifier m2(SW[5:3] , SW[2:0], r2);
 	
-	fa f1(r1[0], r2[0], 1'b0,	r[0], c1);
-	fa f2(r1[1], r2[1], c1,	r[1], c2);
-	fa f3(r1[2], r2[2], c2, r[2], c3);
-	fa f4(r1[3], r2[3], c3, r[3], c4);
-	fa f5(r1[4], r2[4], c4, r[4], c5);
-	fa f6(r1[5], r2[5], c5, r[5], r[6]);
+	add a(r1, r2, r);
 	
 	encode_bcd e7(SW[11:9], HEX7);
 	encode_bcd e6(SW[8:6], HEX6);
@@ -63,6 +57,20 @@ module mul(
 	fa m2(a2, b2, c2  , m[2], c_out);
 endmodule
 
+module add(
+	input [5:0] r1, r2,
+	output [6:0] r
+);
+	wire c1, c2, c3, c4, c5;
+		
+	fa f1(r1[0], r2[0], 1'b0,	r[0], c1);
+	fa f2(r1[1], r2[1], c1,	r[1], c2);
+	fa f3(r1[2], r2[2], c2, r[2], c3);
+	fa f4(r1[3], r2[3], c3, r[3], c4);
+	fa f5(r1[4], r2[4], c4, r[4], c5);
+	fa f6(r1[5], r2[5], c5, r[5], r[6]);
+endmodule
+
 module fa(
 	input a, b, c_in,
 	output s, c_out
@@ -94,7 +102,7 @@ module encode_bcd(
 endmodule
 
 module encode_7bit(
-	input [6:0] inp,
+	input [7:0] inp,
 	output reg [7:0] seg1, seg0
 );
 	function [7:0] seg_map;
@@ -111,18 +119,18 @@ module encode_7bit(
 				4'b0111: seg_map = 8'hF8;
 				4'b1000: seg_map = 8'h80;
 				4'b1001: seg_map = 8'h90;
-        4'b1010: seg_map = 8'h88;
-        4'b1011: seg_map = 8'h83;
-        4'b1100: seg_map = 8'hC6;
-        4'b1101: seg_map = 8'hA1; 
-        4'b1110: seg_map = 8'h86;
-        4'b1111: seg_map = 8'h8E; 
+				4'b1010: seg_map = ~8'h77;
+				4'b1011: seg_map = 8'h80;
+				4'b1100: seg_map = ~8'h39;
+				4'b1101: seg_map = ~8'h3F;
+				4'b1110: seg_map = ~8'h71;
+				4'b1111: seg_map = ~8'h79;
 			endcase
 		end
 	endfunction
 	
 	always @ (*) begin
-		seg1 = seg_map(inp[6:3]);
-		seg0 = seg_map(inp[2:0]);
+		seg1 = seg_map(inp[7:4]);
+		seg0 = seg_map(inp[3:0]); 
 	end
 endmodule

@@ -112,18 +112,12 @@ module encode_7bit(
 				4'b0111: seg_map = 8'hF8;
 				4'b1000: seg_map = 8'h80;
 				4'b1001: seg_map = 8'h90;
-        4'b1010: seg_map = 8'h88;
-        4'b1011: seg_map = 8'h83;
-        4'b1100: seg_map = 8'hC6;
-        4'b1101: seg_map = 8'hA1; 
-        4'b1110: seg_map = 8'h86;
-        4'b1111: seg_map = 8'h8E; 
 			endcase
 		end
 	endfunction
 	
 	always @ (*) begin
-		seg1 = seg_map(inp[6:3]);
-		seg0 = seg_map(inp[2:0]);
+		seg1 = seg_map(inp / 10);
+		seg0 = seg_map(inp % 10); 
 	end
 endmodule
