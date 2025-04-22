@@ -12,7 +12,7 @@ module fsm_5(
 	reg [4:0] current_state, next_state;
 
   always @ (*) begin
-    if (current_state > 30) next_state= 0;
+    if (current_state > 29) next_state = 0;
     else next_state = current_state + 1;
   end
 	
@@ -22,23 +22,26 @@ module fsm_5(
 	end
 	
 	always @ (*) begin
-    if (current_state <= 16) begin
+    LEDG = 1'b0;
+    LEDR = 18'b000000000000000000;
+
+    if (current_state <= 15) begin
       LEDG = 1'b1;
       LEDR = 18'b000000000000000000;
-    end else if (current_state <= 21) begin
+    end else if (current_state <= 20) begin
+      LEDG = 1'b0;
+      LEDR = 18'b100000000000000000;
+    end else if (current_state <= 29) begin
       LEDG = 1'b0;
       LEDR = 18'b000000000000000001;
-    end else if (current_state <= 30) begin
-      LEDG = 1'b0;
-      LEDR = 18'b000000000000100000;
     end
 	end
 
   reg [4:0] count;
   always @ (*) begin
-    if (current_state <= 16) count = 16 - current_state;
-    else if (current_state <= 21) count = 21 - current_state + 5;
-    else count = 30 - current_state + 9;
+    if (current_state <= 15) count = 15 - current_state;
+    else if (current_state <= 20) count = 20 - current_state + 5;
+    else count = 29 - current_state + 9;
   end
 
 	
